@@ -1,0 +1,19 @@
+
+function parseBody(event) {
+  let text = "";
+  try {
+    if (typeof event.body === "string") {
+      text = JSON.parse(event.body).text || "";
+    } else if (event.body && event.body.text) {
+      text = event.body.text;
+    } else {
+      throw new Error("Invalid input format");
+    }
+  } catch (error) {
+    console.error("Error parsing input:", error);
+    throw new Error("Invalid input format");
+  }
+  return text;
+}
+
+module.exports = { parseBody };

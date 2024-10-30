@@ -1,0 +1,45 @@
+service: text-analyze-serverless
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  profile: linus-test
+  region: eu-north-1
+  iam:
+    role: ${env:IAM_ROLE_ARN}
+
+plugins:
+  - serverless-webpack
+
+package:
+  individually: true
+
+build:
+  esbuild: false
+
+custom:
+  webpack:
+    webpackConfig: './webpack.config.js'
+    includeModules: true
+
+functions:
+  wordCount:
+    handler: functions/wordCount/index.handler
+    events:
+      - httpApi:
+          path: /wordCount
+          method: POST
+
+  wordList:
+    handler: functions/wordList/index.handler
+    events:
+      - httpApi:
+          path: /wordList
+          method: POST
+
+  summary:
+    handler: functions/summary/index.handler
+    events:
+      - httpApi:
+          path: /summary
+          method: POST
