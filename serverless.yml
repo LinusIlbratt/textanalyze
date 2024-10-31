@@ -3,7 +3,7 @@ service: text-analyze-serverless
 provider:
   name: aws
   runtime: nodejs20.x
-  profile: linus-test
+  profile: ${env:AWS_PROFILE}
   region: eu-north-1
   iam:
     role: ${env:IAM_ROLE_ARN}
